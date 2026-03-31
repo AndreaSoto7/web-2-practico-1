@@ -8,96 +8,76 @@ const reserva = require('./reserva.model')(sequelize);
 const resena = require('./resena.model')(sequelize);
 
 tipoCancha.hasMany(cancha, {
-    foreignKey: 'tipoCanchaId',
+    foreignKey: 'tipo_id',
     sourceKey: 'id',
     as: 'canchas',
     onDelete: 'CASCADE',
 });
-
 cancha.belongsTo(tipoCancha, {
-    foreignKey: 'tipoCanchaId',
+    foreignKey: 'tipo_id',
     targetKey: 'id',
     as: 'tipoCancha',
 });
 
 cancha.hasMany(horario, {
-    foreignKey: 'canchaId',
+    foreignKey: 'cancha_id',
     sourceKey: 'id',
     as: 'horarios',
     onDelete: 'CASCADE',
 });
-
 horario.belongsTo(cancha, {
-    foreignKey: 'canchaId',
+    foreignKey: 'cancha_id',
     targetKey: 'id',
     as: 'cancha',
 });
 
 usuario.hasMany(reserva, {
-    foreignKey: 'usuarioId',
+    foreignKey: 'usuario_id',
     sourceKey: 'id',
     as: 'reservas',
     onDelete: 'CASCADE',
 });
-
 reserva.belongsTo(usuario, {
-    foreignKey: 'usuarioId',
+    foreignKey: 'usuario_id',
     targetKey: 'id',
     as: 'usuario',
 });
 
-cancha.hasMany(reserva, {
-    foreignKey: 'canchaId',
-    sourceKey: 'id',
-    as: 'reservas',
-    onDelete: 'CASCADE',
-});
-
-reserva.belongsTo(cancha, {
-    foreignKey: 'canchaId',
-    targetKey: 'id',
-    as: 'cancha',
-});
-
 horario.hasMany(reserva, {
-    foreignKey: 'horarioId',
+    foreignKey: 'horario_id',
     sourceKey: 'id',
     as: 'reservas',
     onDelete: 'CASCADE',
 });
-
 reserva.belongsTo(horario, {
-    foreignKey: 'horarioId',
+    foreignKey: 'horario_id',
     targetKey: 'id',
     as: 'horario',
 });
 
 usuario.hasMany(resena, {
-    foreignKey: 'usuarioId',
+    foreignKey: 'usuario_id',
     sourceKey: 'id',
     as: 'resenas',
     onDelete: 'CASCADE',
 });
-
 resena.belongsTo(usuario, {
-    foreignKey: 'usuarioId',
+    foreignKey: 'usuario_id',
     targetKey: 'id',
     as: 'usuario',
 });
 
 cancha.hasMany(resena, {
-    foreignKey: 'canchaId',
+    foreignKey: 'cancha_id',
     sourceKey: 'id',
     as: 'resenas',
     onDelete: 'CASCADE',
 });
-
 resena.belongsTo(cancha, {
-    foreignKey: 'canchaId',
+    foreignKey: 'cancha_id',
     targetKey: 'id',
     as: 'cancha',
 });
-
 
 module.exports = {
     usuario,
