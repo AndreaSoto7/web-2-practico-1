@@ -42,7 +42,7 @@ module.exports = (app, db) => {
     });
 
     app.post('/register', async (req, res) => {
-        const { nombre, email, password, rol } = req.body;
+        const { nombre, email, password } = req.body;
 
         const existingUser = await db.usuario.findOne({
             where: { email }
@@ -60,7 +60,7 @@ module.exports = (app, db) => {
             nombre,
             email,
             password: encodedPassword,
-            rol: rol || 'cliente'
+            rol: 'cliente'
         });
 
         res.redirect('/login');
