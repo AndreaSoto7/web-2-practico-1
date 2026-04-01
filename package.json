@@ -1,0 +1,22 @@
+
+{
+  "name": "web-2-practico-1",
+  "version": "1.0.0",
+  "description": "Proyecto práctico de reserva de canchas",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+   "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "nodemon": "^3.1.14",
+    "sequelize": "^6.37.8",
+    "sha1": "^1.1.1",
+    "sqlite3": "^6.0.1"
+  }
+}
