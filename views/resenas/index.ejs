@@ -1,0 +1,56 @@
+<%- include('../components/header.ejs') %>
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="mb-1">Reseñas</h1>
+            <p class="text-muted mb-0">Consulta las reseñas dejadas por los clientes sobre las canchas.</p>
+        </div>
+        <a href="/reservas" class="btn btn-outline-primary">Ver reservas</a>
+    </div>
+
+    <%- include('../components/error-panel.ejs') %>
+
+    <% if (typeof(success) !== "undefined" && success) { %>
+        <div class="alert alert-success" role="alert">
+            <%= success %>
+        </div>
+    <% } %>
+
+    <div class="row g-3">
+        <% if (!resenas.length) { %>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center text-muted">
+                        Todavia no hay reseñas registradas.
+                    </div>
+                </div>
+            </div>
+        <% } %>
+
+        <% resenas.forEach((resena) => { %>
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <h5 class="card-title mb-1"><%= resena.cancha.nombre %></h5>
+                                <p class="text-muted mb-0">
+                                    <%= resena.cancha.tipoCancha ? resena.cancha.tipoCancha.nombre : 'Sin tipo' %>
+                                </p>
+                            </div>
+                            <span class="badge text-bg-warning"><%= resena.calificacion %>/5</span>
+                        </div>
+
+                        <p class="mb-2"><%= resena.comentario || 'Sin comentario.' %></p>
+                        <p class="text-muted mb-0 small">
+                            Por <%= resena.usuario.nombre %> - <%= new Date(resena.createdAt).toLocaleDateString() %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<%- include('../components/footer.ejs') %>

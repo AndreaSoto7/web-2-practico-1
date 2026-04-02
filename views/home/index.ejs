@@ -1,0 +1,121 @@
+<%- include('../components/header.ejs') %>
+
+<div class="container py-4">
+    <div class="p-4 p-md-5 mb-4 rounded-4 bg-light border">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <span class="badge text-bg-primary mb-3"><%= isAdmin ? 'Panel administrador' : 'Panel cliente' %></span>
+                <h1 class="display-6 mb-3">Bienvenido/a, <%= currentUser.nombre %></h1>
+                <p class="lead mb-0">
+                    <% if (isAdmin) { %>
+                        Desde aqui puedes gestionar canchas, horarios, reservas y revisar las reseñas del sistema.
+                    <% } else { %>
+                        Desde aqui puedes consultar disponibilidad, gestionar tus reservas y dejar reseñas luego de jugar.
+                    <% } %>
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <p class="text-muted mb-2">Cuenta actual</p>
+                        <h5 class="mb-1"><%= currentUser.email %></h5>
+                        <span class="badge text-bg-secondary text-uppercase"><%= currentUser.rol %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-2">Canchas</p>
+                    <h2 class="mb-0"><%= stats.totalCanchas %></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-2">Horarios disponibles</p>
+                    <h2 class="mb-0"><%= stats.totalHorariosDisponibles %></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-2"><%= isAdmin ? 'Reservas totales' : 'Mis reservas' %></p>
+                    <h2 class="mb-0"><%= stats.totalReservas %></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-2">Reseñas</p>
+                    <h2 class="mb-0"><%= stats.totalResenas %></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="h5 mb-0"><%= isAdmin ? 'Ultimas reservas registradas' : 'Tus ultimas reservas' %></h3>
+                        <a href="/reservas" class="btn btn-sm btn-outline-primary">Ver todas</a>
+                    </div>
+
+                    <% if (!latestReservas.length) { %>
+                        <p class="text-muted mb-0">Todavia no hay reservas para mostrar.</p>
+                    <% } else { %>
+                        <div class="list-group list-group-flush">
+                            <% latestReservas.forEach((reserva) => { %>
+                                <div class="list-group-item px-0">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div>
+                                            <h4 class="h6 mb-1"><%= reserva.horario.cancha.nombre %></h4>
+                                            <p class="text-muted mb-0">
+                                                <%= reserva.horario.fecha %> -
+                                                <%= reserva.horario.hora_inicio.slice(0, 5) %> a
+                                                <%= reserva.horario.hora_fin.slice(0, 5) %>
+                                            </p>
+                                        </div>
+                                        <% if (reserva.estado === 'confirmada') { %>
+                                            <span class="badge text-bg-success">Confirmada</span>
+                                        <% } else { %>
+                                            <span class="badge text-bg-secondary">Cancelada</span>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="h5 mb-3">Accesos rapidos</h3>
+                    <div class="d-grid gap-2">
+                        <a href="/horarios" class="btn btn-primary">Consultar horarios</a>
+                        <a href="/reservas" class="btn btn-outline-primary">Ver reservas</a>
+                        <a href="/resenas" class="btn btn-outline-primary">Ver reseñas</a>
+                        <a href="/canchas" class="btn btn-outline-primary">Ver canchas</a>
+                        <% if (isAdmin) { %>
+                            <a href="/tipos-cancha" class="btn btn-outline-dark">Gestionar tipos de cancha</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../components/footer.ejs') %>

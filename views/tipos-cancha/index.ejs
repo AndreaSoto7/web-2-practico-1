@@ -1,0 +1,57 @@
+<%- include('../components/header.ejs') %>
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="mb-1">Tipos de cancha</h1>
+            <p class="text-muted mb-0">Administra las categorias disponibles para las canchas.</p>
+        </div>
+        <a href="/tipos-cancha/nuevo" class="btn btn-primary">Nuevo tipo</a>
+    </div>
+
+    <%- include('../components/error-panel.ejs') %>
+
+    <% if (typeof(success) !== "undefined" && success) { %>
+        <div class="alert alert-success" role="alert">
+            <%= success %>
+        </div>
+    <% } %>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <% if (!tiposCancha.length) { %>
+                <div class="p-4 text-center text-muted">
+                    Todavia no hay tipos de cancha registrados.
+                </div>
+            <% } else { %>
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Canchas asociadas</th>
+                                <th class="text-end">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% tiposCancha.forEach((tipoCancha) => { %>
+                                <tr>
+                                    <td><%= tipoCancha.nombre %></td>
+                                    <td><%= tipoCancha.canchas.length %></td>
+                                    <td class="text-end">
+                                        <a href="/tipos-cancha/<%= tipoCancha.id %>/editar" class="btn btn-sm btn-outline-primary">Editar</a>
+                                        <form action="/tipos-cancha/<%= tipoCancha.id %>/eliminar" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<%- include('../components/footer.ejs') %>

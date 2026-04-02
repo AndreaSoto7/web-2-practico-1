@@ -1,0 +1,36 @@
+<%- include('../components/header.ejs') %>
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title mb-3"><%= title %></h1>
+
+                    <%- include('../components/error-panel.ejs') %>
+
+                    <form action="<%= formAction %>" method="post">
+                        <div class="mb-3">
+                            <label class="form-label" for="nombre">Nombre</label>
+                            <input
+                                class="form-control"
+                                type="text"
+                                name="nombre"
+                                id="nombre"
+                                value="<%= tipoCancha.nombre %>"
+                                required
+                            >
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary"><%= submitLabel %></button>
+                            <a href="/tipos-cancha" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../components/footer.ejs') %>
