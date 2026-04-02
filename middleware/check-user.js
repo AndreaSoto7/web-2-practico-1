@@ -10,8 +10,13 @@ exports.checkUser = (req, res, next) => {
 }
 
 exports.isAdmin = (req, res, next) => {
-    if (req.session.user.rol !== "admin") {
-        return res.send("No autorizado");
+    if (!req.session.user) {
+        return res.status(401).send("Debes iniciar sesion");
     }
+
+    if (req.session.user.rol !== "admin") {
+        return res.status(403).send("No autorizado");
+    }
+
     next();
 };
