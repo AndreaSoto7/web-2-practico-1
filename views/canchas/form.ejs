@@ -1,0 +1,77 @@
+<%- include('../components/header.ejs') %>
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title mb-3"><%= title %></h1>
+
+                    <%- include('../components/error-panel.ejs') %>
+
+                    <% if (!tiposCancha.length) { %>
+                        <div class="alert alert-warning" role="alert">
+                            Primero debes crear al menos un tipo de cancha.
+                            <a href="/tipos-cancha" class="alert-link">Ir a tipos de cancha</a>
+                        </div>
+                    <% } %>
+
+                    <form action="<%= formAction %>" method="post">
+                        <div class="mb-3">
+                            <label class="form-label" for="nombre">Nombre</label>
+                            <input
+                                class="form-control"
+                                type="text"
+                                name="nombre"
+                                id="nombre"
+                                value="<%= cancha.nombre %>"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="tipo_id">Tipo de cancha</label>
+                            <select class="form-select" name="tipo_id" id="tipo_id" required>
+                                <option value="">Selecciona un tipo</option>
+                                <% tiposCancha.forEach((tipoCancha) => { %>
+                                    <option value="<%= tipoCancha.id %>" <%= Number(cancha.tipo_id) === tipoCancha.id ? 'selected' : '' %>>
+                                        <%= tipoCancha.nombre %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="precioPorHora">Precio por hora</label>
+                            <input
+                                class="form-control"
+                                type="number"
+                                name="precioPorHora"
+                                id="precioPorHora"
+                                min="0.01"
+                                step="0.01"
+                                value="<%= cancha.precioPorHora %>"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="estado">Estado</label>
+                            <select class="form-select" name="estado" id="estado" required>
+                                <option value="activa" <%= cancha.estado === 'activa' ? 'selected' : '' %>>Activa</option>
+                                <option value="inactiva" <%= cancha.estado === 'inactiva' ? 'selected' : '' %>>Inactiva</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary"><%= submitLabel %></button>
+                            <a href="/canchas" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../components/footer.ejs') %>

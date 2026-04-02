@@ -1,0 +1,59 @@
+<%- include('../components/header.ejs') %>
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title mb-3"><%= title %></h1>
+
+                    <%- include('../components/error-panel.ejs') %>
+
+                    <form action="<%= formAction %>" method="post">
+                        <div class="mb-3">
+                            <label class="form-label" for="cancha_id">Cancha</label>
+                            <select class="form-select" name="cancha_id" id="cancha_id" required>
+                                <option value="">Selecciona una cancha</option>
+                                <% canchas.forEach((cancha) => { %>
+                                    <option value="<%= cancha.id %>" <%= Number(horario.cancha_id) === cancha.id ? 'selected' : '' %>>
+                                        <%= cancha.nombre %> - <%= cancha.tipoCancha ? cancha.tipoCancha.nombre : 'Sin tipo' %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="fecha">Fecha</label>
+                            <input class="form-control" type="date" name="fecha" id="fecha" value="<%= horario.fecha %>" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="hora_inicio">Hora de inicio</label>
+                                <input class="form-control" type="time" name="hora_inicio" id="hora_inicio" value="<%= horario.hora_inicio %>" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="hora_fin">Hora de fin</label>
+                                <input class="form-control" type="time" name="hora_fin" id="hora_fin" value="<%= horario.hora_fin %>" required>
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" name="disponible" id="disponible" value="true" <%= horario.disponible ? 'checked' : '' %>>
+                            <label class="form-check-label" for="disponible">
+                                Disponible para reservas
+                            </label>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary"><%= submitLabel %></button>
+                            <a href="/horarios" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../components/footer.ejs') %>
